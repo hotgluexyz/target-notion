@@ -11,7 +11,7 @@ class TargetNotion(TargetHotglue):
     """Singer target for Notion."""
 
     name = "target-notion"
-    alerting_level = AlertingLevel.ERROR
+    alerting_level = AlertingLevel.WARNING
     config_jsonschema = th.PropertiesList(
         th.Property(
             "token",
