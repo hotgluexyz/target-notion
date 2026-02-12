@@ -1,0 +1,23 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: target-notion
+plugins:
+  extractors: []
+  loaders:
+  - name: target-notion
+    namespace: target_notion
+    pip_url: -e .
+    capabilities:
+    - state
+    - catalog
+    - discover
+    config:
+      database_id: ""
+    settings:
+    - name: token
+      kind: password
+    - name: database_id
+    - name: output_record_url
+      value: false
+    - name: notion_api_version
+      value: "2025-09-03"

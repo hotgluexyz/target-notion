@@ -1,0 +1,2 @@
+{"type":"SCHEMA","stream":"Comment","schema":{"type":"object","properties":{"parent":{"type":"object"},"discussion_id":{"type":"string"},"rich_text":{"type":"array"},"display_name":{"type":"object"},"attachments":{"type":"array"}},"additionalProperties":true},"key_properties":[]}
+{"type":"RECORD","stream":"Comment","record":{"parent":{"page_id":"REPLACE_WITH_EXISTING_PAGE_ID"},"rich_text":[{"type":"text","text":{"content":"Sample comment added by target-notion."}}]},"time_extracted":"2026-02-12T12:00:02.000000Z"}
