@@ -4,14 +4,56 @@ from typing import Any, Optional, Tuple
 
 from target_notion.client import NotionRecordSink
 from hotglue_etl_exceptions import InvalidPayloadError
+from functools import cached_property
 
 
-class Page(NotionRecordSink):
+class FallbackSink(NotionRecordSink):
     """Notion pages sink: create or update page objects."""
 
     name = "Page"
     endpoint = "/pages"
     supports_updates = True
+
+    @cached_property
+    def data_source_properties(self) -> dict:
+        database_id = self.config.get("database_id")
+        database = self.request_api("GET", f"/databases/{database_id}").json()
+        # Get the data source ID from the database info
+        data_source_id = database.get("data_sources")[0].get("id")
+        # Get the data source info
+        data_source = self.request_api("GET", f"/data_sources/{data_source_id}").json()
+        # Get the data source properties
+        data_source_properties = data_source.get("properties")
+
+        return data_source_properties
+
+    def preprocess_record(self, record: dict, context: dict) -> dict:
+        # Get the database info
+        database_id = self.config.get("database_id")
+        # Get the data source properties
+        data_source_properties = self.data_source_properties
+
+        # Using the data source properties, we need to remap the record to the proper Notion API shape
+        properties_map = {}
+        for p in data_source_properties.values():
+            if not record.get(p.get("name")):
+                continue
+
+            property_type = p.get("type")
+
+            if property_type in ["title", "rich_text"]:
+                properties_map[p.get("name")] = {
+                    property_type: [{ "text": { "content": record.get(p.get("name")) } }]
+                }
+            else:
+                raise ValueError(f"Unsupported property type: {property_type}")
+
+        payload = {
+            "parent": { "database_id": database_id },
+            "properties": properties_map
+        }
+
+        return payload
 
 
 class Database(NotionRecordSink):

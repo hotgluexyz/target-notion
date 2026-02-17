@@ -7,7 +7,7 @@ from hotglue_singer_sdk.testing import get_standard_target_tests
 from target_notion.target import TargetNotion
 
 SAMPLE_CONFIG: Dict[str, Any] = {
-    "token": "ntn_test_token",
+    "access_token": "ntn_test_token",
 }
 
 

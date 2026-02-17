@@ -27,7 +27,7 @@ target-notion --about
 
 ```json
 {
-  "token": "ntn_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "access_token": "ntn_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "output_record_url": false,
   "notion_api_version": "2025-09-03"
 }

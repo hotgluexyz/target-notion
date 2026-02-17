@@ -18,7 +18,7 @@ class NotionSink(HotglueSink):
     @property
     def http_headers(self) -> Dict[str, Any]:
         """Notion requires Bearer token and Notion-Version. Rest adds Content-Type."""
-        token = self.config.get("token")
+        token = self.config.get("access_token")
         version = self.config.get("notion_api_version", DEFAULT_NOTION_API_VERSION)
         return {
             "Authorization": f"Bearer {token}",
