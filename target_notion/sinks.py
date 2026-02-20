@@ -61,6 +61,10 @@ class FallbackSink(NotionRecordSink):
                 properties_map[p.get("name")] = {
                     property_type: record.get(p.get("name"))
                 }
+            elif property_type == "url":
+                properties_map[p.get("name")] = {
+                    "url": record.get(p.get("name"))
+                }
             elif property_type in ["people"]:
                 # We will match the name to a Notion user id
                 people_name = record.get(p.get("name"))
